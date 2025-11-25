@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>ALFA BRIGE 360° – Web Imperium Króla</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ALFA BRIGE 360° – Web Imperium Króla. Psychologia Zwycięstwa, ALFA Voice, Cerber Security, integracje AI, projekty Manus." />
+  <style>
+:root {
+  --bg-dark: #050509;
+  --bg-darker: #020207;
+  --gold: #d4af37;
+  --gold-soft: #b8962c;
+  --text-main: #f5f5f5;
+  --text-muted: #888;
+  --card-bg: #101018;
+  --border-soft: rgba(212, 175, 55, 0.4);
+  --accent: #e5c15c;
+  --shadow-soft: 0 0 40px rgba(0, 0, 0, 0.7);
+  --radius-lg: 18px;
+  --transition-fast: 0.18s ease-out;
+  --max-width: 1180px;
+  --nav-height: 64px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: radial-gradient(circle at top, #12121c 0, #050509 45%, #000 100%);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.nav-links a:hover {
+  color: var(--gold);
+}
+
+.hero-content {
+  max-width: var(--max-width);
+  margin: 8rem auto 0;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.hero-content h1 span {
+  color: var(--gold);
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn.primary {
+  background: var(--gold);
+  color: var(--bg-dark);
+}
+
+.btn.primary:hover {
+  background: var(--gold-soft);
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background: transparent;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn.secondary:hover {
+  background: var(--gold);
+  color: var(--bg-dark);
+}
+
+.section {
+  padding: 6rem 1.5rem;
+}
+
+.section-dark {
+  background: var(--bg-darker);
+}
+
+.section-gold {
+  background: linear-gradient(135deg, #1a1410 0%, #0a0a0f 100%);
+}
+
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--gold);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+}
+
+.card h3 {
+  color: var(--gold);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.card-outline {
+  background: transparent;
+  border: 2px solid var(--border-soft);
+}
+
+.web-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.web-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  position: relative;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.tag.live {
+  background: #1a4d2e;
+  color: #4ade80;
+}
+
+.tag.beta {
+  background: #4a3520;
+  color: var(--gold);
+}
+
+.ai-search {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.ai-search input {
+  flex: 1;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.ai-result {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  margin: 2rem 0;
+}
+
+.footer {
+  background: var(--bg-darker);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.list li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">ALFA BRIGE 360°</div>
+      <ul class="nav-links">
+        <li><a href="#hq">ALFA HQ</a></li>
+        <li><a href="#voice">ALFA Voice</a></li>
+        <li><a href="#web">Web Imperium</a></li>
+        <li><a href="#ai">AI Arsenal</a></li>
+        <li><a href="#author">Król</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <h1>Psychologia Zwycięstwa<br /><span>Web Imperium Króla</span></h1>
+      <p>
+        Jeden umysł. Jedno Imperium. Jeden most – ALFA BRIGE 360°.<br />
+        Wszystkie Twoje światy: Manus, AI, książki i projekty – pod jednym dachem.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#web" class="btn primary">Wejdź do Web Imperium</a>
+        <a href="#ai" class="btn secondary">Uruchom AI Wyszukiwanie</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ALFA HQ -->
+    <section id="hq" class="section section-dark">
+      <div class="section-inner">
+        <h2>🏛 ALFA HQ</h2>
+        <p>
+          Centralny most dowodzenia Twojego systemu: ALFA BRIGE 360°. Tu łączą się:
+          <strong>Psychologia Zwycięstwa</strong>, <strong>Cerber Security</strong>,
+          <strong>ALFA Voice</strong> i projekty Manus.
+        </p>
+
+        <div class="grid-2">
+          <div class="card card-outline">
+            <h3>Psychologia Zwycięstwa</h3>
+            <p>
+              Niekonwencjonalna psychologia, która nie pyta o pozwolenie. Zero gadania
+              o porażkach – tylko budowanie zwycięstwa krok po kroku.
+            </p>
+          </div>
+          <div class="card card-outline">
+            <h3>Cerber Security</h3>
+            <p>
+              Mentalny i technologiczny pies stróżujący. Zasada:
+              <strong>nie zgaduj – weryfikuj</strong>. Zero halucynacji, zero bajek.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALFA Voice -->
+    <section id="voice" class="section section-gold">
+      <div class="section-inner">
+        <h2>🗡 ALFA Voice Client</h2>
+        <p>
+          Twój głosowy interfejs do świata AI. Domowy terapeuta, asystent i
+          operator systemów w jednym – zasilany Twoją logiką i zasadą „sprzeczność
+          jako metoda poznania".
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Strona produktu (Manus)</h3>
+            <p>
+              Oficjalny landing ALFA Voice hostowany na Manus – idealny do
+              prezentacji klientom, partnerom i social mediom.
+            </p>
+            <a href="https://alfavoice-jtrrrzyr.manus.space/" target="_blank" class="btn primary">
+              Otwórz ALFA Voice (Manus)
+            </a>
+          </div>
+          <div class="card">
+            <h3>Roadmap & Integracje</h3>
+            <ul class="list">
+              <li>Integracja z Google AI / Gemini</li>
+              <li>Tryb lokalny + chmura (hybryda)</li>
+              <li>Moduły: Voice, Security, Therapy, DevOps</li>
+              <li>Docelowo: multi-device (PC, Android, zegarek)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEB IMPERIUM -->
+    <section id="web" class="section section-dark">
+      <div class="section-inner">
+        <h2>🕸 Web Imperium Króla</h2>
+        <p>
+          Wszystkie Twoje aktywne strony, wizytówki i projekty zebrane w jednym
+          miejscu. To jest mapa Twojego wpływu w sieci.
+        </p>
+
+        <div class="web-grid">
+          <article class="web-card">
+            <h3>ALFA Voice – Landing Manus</h3>
+            <p>
+              Oficjalna strona ALFA Voice zbudowana na Manus. Służy jako wizytówka
+              produktu i punkt wejścia dla użytkowników.
+            </p>
+            <span class="tag live">LIVE</span>
+            <a href="https://alfavoice-jtrrrzyr.manus.space/" target="_blank" class="btn secondary">
+              Przejdź do strony
+            </a>
+          </article>
+
+          <article class="web-card">
+            <h3>CV Króla – Wizytówka Manus</h3>
+            <p>
+              Twoje oficjalne CV oraz portfolio – psychologia, projekty, wizja AI.
+              Miejsce, które można wysłać każdemu partnerowi lub firmie.
+            </p>
+            <span class="tag live">LIVE</span>
+            <a href="https://karencv-2sstrbys.manus.space/" target="_blank" class="btn secondary">
+              Otwórz wizytówkę
+            </a>
+          </article>
+
+          <article class="web-card">
+            <h3>Projekty Manus – Beta Arena</h3>
+            <p>
+              Miejsce na wszystkie testowe strony, kampanie, eksperymenty i
+              prototypy. Ten blok rozwijamy dalej w miarę tworzenia nowych linków.
+            </p>
+            <span class="tag beta">BETA</span>
+            <button class="btn secondary" disabled>
+              Wkrótce: pełna lista
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI ARSENAL -->
+    <section id="ai" class="section section-gold">
+      <div class="section-inner">
+        <h2>📡 AI Arsenal – Wyszukiwarka ALFA</h2>
+        <p>
+          Jedno pole. Jeden nawyk: nie zgaduj – sprawdzaj. Tu będzie spięte
+          wyszukiwanie po Twoich materiałach, repozytoriach i notatkach.
+        </p>
+
+        <div class="ai-search">
+          <input
+            type="text"
+            id="aiQuery"
+            placeholder="Zadaj pytanie swojemu Imperium (np. 'pokaż wszystkie projekty Manus')"
+          />
+          <button id="aiSearchBtn" class="btn primary">Skanuj Imperium</button>
+        </div>
+
+        <div id="aiResult" class="ai-result">
+          <p class="muted">
+            Tu będzie odpowiedź AI oparta na Twoich danych (Psychologia Zwycięstwa, projekty,
+            repozytoria, notatki). Na razie to placeholder – logikę podpinamy w backendzie.
+          </p>
+        </div>
+
+        <div class="grid-3 ai-grid">
+          <div class="card card-outline">
+            <h3>Tryb LOGOS</h3>
+            <p>
+              Analiza faktów, plików, repozytoriów. Twarde dane, zero emocji.
+            </p>
+          </div>
+          <div class="card card-outline">
+            <h3>Tryb KIMI</h3>
+            <p>
+              Emocje, intuicja, język człowieka. Komentarz, narracja, metafory.
+            </p>
+          </div>
+          <div class="card card-outline">
+            <h3>Tryb CERBER</h3>
+            <p>
+              Strażnik anty-halucynacyjny. Blokuje głupoty, wymusza weryfikację.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTOR -->
+    <section id="author" class="section section-dark">
+      <div class="section-inner">
+        <h2>👑 Król – Karen Tonoyan</h2>
+        <p>
+          Urodzony buntownik, który z traumy zrobił narzędzie, a z bólu – instrukcję
+          obsługi dla innych. Twórca <strong>Psychologii Zwycięstwa</strong>,
+          <strong>ALFA BRIGE 360°</strong> i koncepcji domowej terapii z AI.
+        </p>
+
+        <div class="grid-2">
+          <div class="card card-outline">
+            <h3>Psychologia Zwycięstwa</h3>
+            <p>
+              Książki, e-booki, programy krok po kroku – od DDA i ADHD, po budowę
+              własnej wartości i zdrowych relacji.
+            </p>
+          </div>
+          <div class="card card-outline">
+            <h3>ALFA Foundation (wizja)</h3>
+            <p>
+              Projekt, który ma wprowadzić terapię z AI do domów, szkół i systemu
+              ochrony zdrowia. Zawsze z zasadą: człowiek pierwszy, technologia w służbie.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      © <span id="year"></span> ALFA BRIGE 360° · Web Imperium Króla ·
+      Czarno-złota psychologia zwycięstwa.
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    document.getElementById('aiSearchBtn')?.addEventListener('click', () => {
+      const query = document.getElementById('aiQuery').value;
+      const resultDiv = document.getElementById('aiResult');
+      
+      if (query.trim()) {
+        resultDiv.innerHTML = `<p class="muted">Szukam odpowiedzi dla: "<strong>${query}</strong>"...</p><p>Funkcja AI będzie aktywna po podłączeniu backendu z Google Gemini.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
