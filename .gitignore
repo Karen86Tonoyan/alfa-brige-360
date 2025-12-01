@@ -1,0 +1,18 @@
+# OLLAMA
+.ollama/
+models/
+blobs/
+*.bin
+*.blob
+*.cache
+*.gguf
+*.safetensors
+
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
