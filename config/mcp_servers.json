@@ -1,0 +1,106 @@
+{
+  "version": "2.0",
+  "description": "ALFA_CORE MCP Server Configuration",
+  
+  "layers": {
+    "creative": {
+      "description": "Design & Web Publishing Pipeline",
+      "servers": ["figma", "webflow"]
+    },
+    "knowledge": {
+      "description": "Documentation & Knowledge Base",
+      "servers": ["deepwiki", "microsoft-docs"]
+    },
+    "automation": {
+      "description": "Data Processing & Web Scraping",
+      "servers": ["apify", "markitdown"]
+    },
+    "dev": {
+      "description": "Local Developer Tools",
+      "servers": ["idl-vscode", "pylance"]
+    }
+  },
+
+  "servers": {
+    "figma": {
+      "type": "http",
+      "url": "http://127.0.0.1:3845/mcp",
+      "layer": "creative",
+      "enabled": true,
+      "description": "Figma API bridge - design integration",
+      "healthcheck": "/health",
+      "timeout": 30
+    },
+    
+    "webflow": {
+      "type": "sse",
+      "url": "https://mcp.webflow.com/sse",
+      "layer": "creative",
+      "enabled": true,
+      "description": "Webflow CMS integration",
+      "timeout": 60
+    },
+    
+    "deepwiki": {
+      "type": "sse",
+      "url": "https://mcp.deepwiki.com/sse",
+      "layer": "knowledge",
+      "enabled": true,
+      "description": "Knowledge base with SSE streaming",
+      "timeout": 120
+    },
+    
+    "microsoft-docs": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp",
+      "layer": "knowledge",
+      "enabled": true,
+      "description": "Microsoft Learn documentation API",
+      "timeout": 30
+    },
+    
+    "apify": {
+      "type": "http",
+      "url": "https://mcp.apify.com",
+      "layer": "automation",
+      "enabled": true,
+      "description": "Web scraping and automation workflows",
+      "timeout": 120,
+      "auth": {
+        "type": "bearer",
+        "env_var": "APIFY_API_KEY"
+      }
+    },
+    
+    "markitdown": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["markitdown-mcp"],
+      "layer": "automation",
+      "enabled": true,
+      "description": "Markdown parser and transformer"
+    },
+    
+    "idl-vscode": {
+      "type": "sse",
+      "url": "http://localhost:4142/sse",
+      "layer": "dev",
+      "enabled": true,
+      "description": "IDL for VS Code - live streaming events"
+    },
+    
+    "pylance": {
+      "type": "internal",
+      "layer": "dev",
+      "enabled": true,
+      "description": "Python language server integration"
+    }
+  },
+
+  "routing": {
+    "default_layer": "knowledge",
+    "fallback_chain": ["knowledge", "automation", "creative"],
+    "parallel_queries": true,
+    "max_concurrent": 4
+  }
+}

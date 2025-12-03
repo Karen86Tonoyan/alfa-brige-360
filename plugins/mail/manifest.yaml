@@ -1,0 +1,41 @@
+# Plugin: ALFA Mail
+# IMAP email client with PQXHybrid encryption
+
+name: mail
+version: "1.0.0"
+description: "Secure email client with IMAP sync and post-quantum encryption"
+author: "ALFA System / Karen86Tonoyan"
+layer: "automation"
+
+# Dependencies
+dependencies: []
+python_deps:
+  - imaplib2
+  - email
+  - cryptography
+
+# Events this plugin listens to
+events:
+  mail.check: "on_check_mail"
+  mail.send: "on_send_mail"
+  mail.sync: "on_sync"
+
+# Commands this plugin provides
+commands:
+  - mail
+  - inbox
+  - compose
+  - sync
+
+# Plugin settings
+settings:
+  imap_host: ""
+  imap_port: 993
+  smtp_host: ""
+  smtp_port: 587
+  username: ""
+  password_encrypted: ""
+  check_interval: 300  # seconds
+  encryption: "pqxhybrid"  # none, pqxhybrid, aes256
+
+enabled: true

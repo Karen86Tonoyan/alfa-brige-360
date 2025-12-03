@@ -1,0 +1,37 @@
+# Plugin: ALFA Voice
+# Speech-to-Text and Text-to-Speech daemon
+
+name: voice
+version: "1.0.0"
+description: "Voice I/O daemon with STT (Whisper) and TTS (Edge/Piper)"
+author: "ALFA System / Karen86Tonoyan"
+layer: "automation"
+
+dependencies: []
+python_deps:
+  - openai-whisper
+  - pyttsx3
+  - pyaudio
+
+events:
+  voice.listen: "on_listen"
+  voice.speak: "on_speak"
+  voice.wakeword: "on_wakeword"
+
+commands:
+  - voice
+  - listen
+  - speak
+  - mute
+
+settings:
+  stt_engine: "whisper"  # whisper, google, vosk
+  stt_model: "base"      # tiny, base, small, medium, large
+  tts_engine: "edge"     # edge, piper, pyttsx3
+  tts_voice: "pl-PL-ZofiaNeural"
+  wakeword: "alfa"
+  auto_listen: false
+  silence_threshold: 500
+  silence_duration: 2.0
+
+enabled: true

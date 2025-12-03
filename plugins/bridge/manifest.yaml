@@ -1,0 +1,72 @@
+# Plugin: ALFA Bridge
+# Multi-AI Router: Ollama, DeepSeek, Gemini, Grok
+
+name: bridge
+version: "1.0.0"
+description: "Multi-AI router with fallback chain and load balancing"
+author: "ALFA System / Karen86Tonoyan"
+layer: "knowledge"
+
+dependencies: []
+python_deps:
+  - httpx
+  - openai
+
+events:
+  bridge.query: "on_query"
+  bridge.switch: "on_switch_model"
+  bridge.health: "on_health_check"
+
+commands:
+  - ai
+  - model
+  - switch
+  - health
+
+settings:
+  # Available providers
+  providers:
+    ollama:
+      enabled: true
+      base_url: "http://localhost:11434"
+      default_model: "llama3"
+      timeout: 120
+    deepseek:
+      enabled: true
+      base_url: "https://api.deepseek.com"
+      api_key_env: "DEEPSEEK_API_KEY"
+      default_model: "deepseek-chat"
+      timeout: 60
+    gemini:
+      enabled: false
+      api_key_env: "GEMINI_API_KEY"
+      default_model: "gemini-pro"
+      timeout: 60
+    grok:
+      enabled: false
+      api_key_env: "GROK_API_KEY"
+      base_url: "https://api.x.ai/v1"
+      default_model: "grok-beta"
+      timeout: 60
+    openai:
+      enabled: false
+      api_key_env: "OPENAI_API_KEY"
+      default_model: "gpt-4o-mini"
+      timeout: 60
+  
+  # Default provider
+  default_provider: "ollama"
+  
+  # Fallback chain
+  fallback_chain:
+    - ollama
+    - deepseek
+  
+  # Load balancing (round-robin / priority / latency)
+  load_balance: "priority"
+  
+  # Retry settings
+  max_retries: 2
+  retry_delay: 1.0
+
+enabled: true

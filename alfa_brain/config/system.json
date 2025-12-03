@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "codename": "CERBER_EDITION",
+  "mode": "development",
+  
+  "paths": {
+    "root": ".",
+    "plugins": "plugins",
+    "config": "config",
+    "logs": "logs",
+    "data": "data"
+  },
+  
+  "engine": {
+    "heartbeat_interval": 30,
+    "max_plugins": 50,
+    "auto_start_plugins": true
+  },
+  
+  "cerber": {
+    "enabled": true,
+    "verify_on_boot": true,
+    "watch_extensions": [".py", ".json", ".yaml"],
+    "snapshot_dir": ".snapshots",
+    "signatures_file": "config/signatures.json"
+  },
+  
+  "event_bus": {
+    "max_queue_size": 10000,
+    "worker_threads": 2,
+    "dead_letter_queue_size": 1000
+  },
+  
+  "api": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 8000,
+    "cors_origins": ["http://localhost:*"]
+  },
+  
+  "ai": {
+    "default_provider": "ollama",
+    "ollama": {
+      "base_url": "http://localhost:11434",
+      "default_model": "llama3",
+      "timeout": 120
+    },
+    "profiles": {
+      "fast": {"model": "mistral", "temperature": 0.3},
+      "balanced": {"model": "llama3", "temperature": 0.6},
+      "creative": {"model": "deepseek-r1", "temperature": 0.9},
+      "security": {"model": "llama3", "temperature": 0.1}
+    }
+  },
+  
+  "security": {
+    "allowed_ips": ["127.0.0.1", "::1", "localhost"],
+    "rate_limit_window": 60,
+    "rate_limit_max": 100
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "format": "[%(asctime)s] [%(levelname)s] %(name)s: %(message)s",
+    "file": "logs/alfa_brain.log",
+    "max_size_mb": 10,
+    "backup_count": 5
+  }
+}

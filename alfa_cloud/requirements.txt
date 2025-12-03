@@ -1,0 +1,32 @@
+# ALFA CLOUD OFFLINE - Dependencies
+# Install: pip install -r requirements.txt
+
+# Core
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+httpx>=0.25.0
+
+# Encryption
+cryptography>=41.0.0
+
+# File watching
+watchdog>=3.0.0
+
+# System
+psutil>=5.9.0
+aiofiles>=23.0.0
+
+# WebSocket
+websockets>=12.0
+
+# Utils
+python-multipart>=0.0.6
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Optional: AI (requires Ollama running locally)
+# ollama  # Native REST API via httpx
+
+# Optional: Compression
+zstandard>=0.22.0

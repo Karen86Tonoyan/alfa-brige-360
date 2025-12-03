@@ -1,0 +1,72 @@
+{
+  "version": "2.0.0",
+  "description": "ALFA_CORE Extensions Configuration",
+  
+  "modules": {
+    "coding": {
+      "enabled": true,
+      "config": {
+        "timeout": 30,
+        "sandbox_enabled": true,
+        "allow_file_ops": false
+      }
+    },
+    "chat": {
+      "enabled": true,
+      "config": {
+        "default_model": "balanced",
+        "history_size": 50
+      }
+    },
+    "vision": {
+      "enabled": true,
+      "config": {
+        "model": "llava"
+      }
+    },
+    "audio": {
+      "enabled": true,
+      "config": {
+        "stt_engine": "whisper",
+        "tts_engine": "piper"
+      }
+    },
+    "video": {
+      "enabled": false,
+      "config": {}
+    },
+    "security": {
+      "enabled": true,
+      "config": {
+        "cerber_mode": true,
+        "log_all": true
+      }
+    },
+    "web": {
+      "enabled": true,
+      "config": {
+        "timeout": 30,
+        "user_agent": "ALFA_CORE/2.0"
+      }
+    }
+  },
+  
+  "layers": {
+    "creative": {
+      "enabled": true,
+      "modules": ["figma", "webflow"]
+    },
+    "knowledge": {
+      "enabled": true,
+      "modules": ["deepwiki", "microsoft-docs"]
+    },
+    "automation": {
+      "enabled": true,
+      "modules": ["apify", "markitdown"]
+    },
+    "dev": {
+      "enabled": true,
+      "modules": ["idl-vscode", "pylance"]
+    }
+  }
+}
