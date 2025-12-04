@@ -9,16 +9,21 @@ Usage:
     
     executor = SecureExecutor()
     result = executor.execute("print('Hello')")
+    
+    # Async execution
+    result = await executor.execute_async(some_async_func, arg1, arg2)
 """
 
 import ast
+import asyncio
+import inspect
 import logging
 import sys
 import io
 import threading
 import time
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set
 
 LOG = logging.getLogger("alfa.executor")
 
@@ -191,6 +196,117 @@ class SecureExecutor:
             return_value=result["value"],
             execution_time_ms=(time.time() - start_time) * 1000
         )
+    
+    def execute_func(
+        self,
+        func: Callable,
+        *args,
+        **kwargs
+    ) -> ExecutionResult:
+        """
+        Execute a function safely, handling both sync and async.
+        
+        🔥 ASYNC FIX: Properly awaits coroutines instead of returning them.
+        
+        Args:
+            func: Function to execute (can be sync or async)
+            *args, **kwargs: Arguments to pass to function
+            
+        Returns:
+            ExecutionResult with the actual result (not a coroutine)
+        """
+        start_time = time.time()
+        
+        try:
+            # 🔥 Case 1: Function is async (defined with async def)
+            if inspect.iscoroutinefunction(func):
+                # Get or create event loop
+                try:
+                    loop = asyncio.get_running_loop()
+                    # Already in async context - schedule and run
+                    import concurrent.futures
+                    with concurrent.futures.ThreadPoolExecutor() as pool:
+                        future = pool.submit(asyncio.run, func(*args, **kwargs))
+                        result = future.result(timeout=self.timeout)
+                except RuntimeError:
+                    # No running loop - create one
+                    result = asyncio.run(func(*args, **kwargs))
+            else:
+                # 🔥 Case 2: Regular sync function
+                result = func(*args, **kwargs)
+                
+                # 🔥 Case 3: Sync function that returns a coroutine
+                if inspect.iscoroutine(result):
+                    try:
+                        loop = asyncio.get_running_loop()
+                        import concurrent.futures
+                        with concurrent.futures.ThreadPoolExecutor() as pool:
+                            future = pool.submit(asyncio.run, result)
+                            result = future.result(timeout=self.timeout)
+                    except RuntimeError:
+                        result = asyncio.run(result)
+            
+            return ExecutionResult(
+                success=True,
+                return_value=result,
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+            
+        except asyncio.TimeoutError:
+            return ExecutionResult(
+                success=False,
+                error=f"Async timeout after {self.timeout}s",
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+        except Exception as e:
+            return ExecutionResult(
+                success=False,
+                error=f"{type(e).__name__}: {e}",
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+    
+    async def execute_async(
+        self,
+        func: Callable,
+        *args,
+        **kwargs
+    ) -> ExecutionResult:
+        """
+        Execute async function with proper await.
+        
+        Use this when you're already in an async context.
+        """
+        start_time = time.time()
+        
+        try:
+            if inspect.iscoroutinefunction(func):
+                result = await asyncio.wait_for(
+                    func(*args, **kwargs),
+                    timeout=self.timeout
+                )
+            else:
+                result = func(*args, **kwargs)
+                if inspect.iscoroutine(result):
+                    result = await asyncio.wait_for(result, timeout=self.timeout)
+            
+            return ExecutionResult(
+                success=True,
+                return_value=result,
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+            
+        except asyncio.TimeoutError:
+            return ExecutionResult(
+                success=False,
+                error=f"Async timeout after {self.timeout}s",
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
+        except Exception as e:
+            return ExecutionResult(
+                success=False,
+                error=f"{type(e).__name__}: {e}",
+                execution_time_ms=(time.time() - start_time) * 1000
+            )
 
 # ═══════════════════════════════════════════════════════════════════════════
 # CONVENIENCE
