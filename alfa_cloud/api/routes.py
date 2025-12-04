@@ -408,3 +408,114 @@ async def restore_backup(request: Request, backup_name: str):
         "backup": backup_name,
         "timestamp": datetime.now().isoformat()
     }
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# SECURITY ENDPOINTS (Cerber v7)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+@router.get("/security/status")
+async def security_status(request: Request):
+    """🛡️ Status bezpieczeństwa"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        return {
+            "status": "disabled",
+            "message": "Security module is not enabled"
+        }
+    
+    return cloud.security.get_status()
+
+
+@router.get("/security/alerts")
+async def security_alerts(request: Request, limit: int = Query(50, ge=1, le=1000)):
+    """🚨 Lista alertów bezpieczeństwa"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    alerts = cloud.security.get_alerts()
+    return {
+        "total": len(alerts),
+        "alerts": alerts[-limit:]
+    }
+
+
+@router.get("/security/captures")
+async def security_captures(request: Request):
+    """🪤 Przechwycone payloady z honeypotów"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    return {
+        "captures": cloud.security.get_captures()
+    }
+
+
+@router.get("/security/decoys")
+async def security_decoys(request: Request):
+    """🪤 Status przynęt"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    return {
+        "decoys": cloud.security.get_decoy_status()
+    }
+
+
+@router.post("/security/evidence/capture")
+async def capture_evidence(request: Request):
+    """📸 Zbierz dowody forensyczne"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    bundle = cloud.security.capture_evidence()
+    
+    return {
+        "status": "captured",
+        "bundle_id": bundle.id,
+        "artifacts": len(bundle.artifacts),
+        "timestamp": datetime.now().isoformat()
+    }
+
+
+@router.post("/security/report")
+async def generate_security_report(request: Request):
+    """📄 Generuj raport bezpieczeństwa"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    report_path = cloud.security.export_security_report()
+    
+    return {
+        "status": "generated",
+        "path": str(report_path),
+        "timestamp": datetime.now().isoformat()
+    }
+
+
+@router.post("/security/honeypot/start")
+async def start_honeypot(request: Request, port: int = Query(4040, ge=1024, le=65535)):
+    """🪤 Uruchom honeypot na porcie"""
+    cloud = get_cloud(request)
+    
+    if not cloud.security:
+        raise HTTPException(status_code=503, detail="Security module not enabled")
+    
+    cloud.security.start_honeypot(port=port)
+    
+    return {
+        "status": "started",
+        "port": port,
+        "timestamp": datetime.now().isoformat()
+    }

@@ -82,6 +82,15 @@ from .extensions_loader import (
     get_extensions_loader,
 )
 
+from .photos_vault_bridge import (
+    PhotosVaultBridge,
+    PhotoInfo,
+    VaultStats,
+    VaultState,
+    OperationResult,
+    get_photos_vault,
+)
+
 __all__ = [
     # MCP Dispatcher
     "MCPDispatcher",
@@ -140,4 +149,11 @@ __all__ = [
     "LayerInfo",
     "ConfigValidator",
     "get_extensions_loader",
+    # Photos Vault Bridge
+    "PhotosVaultBridge",
+    "PhotoInfo",
+    "VaultStats",
+    "VaultState",
+    "OperationResult",
+    "get_photos_vault",
 ]

@@ -17,6 +17,13 @@ import shutil
 import sqlite3
 import threading
 
+# Security imports
+try:
+    from ..security import SecurityManager
+    SECURITY_AVAILABLE = True
+except ImportError:
+    SECURITY_AVAILABLE = False
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # CLOUD STATUS
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -119,6 +126,9 @@ class CloudEngine:
         self.db: Optional[sqlite3.Connection] = None
         self.logger = self._setup_logging()
         self.stats = CloudStats()
+        
+        # Security manager (Cerber v7)
+        self.security: Optional["SecurityManager"] = None
         
         # Event handlers
         self._event_handlers: Dict[str, List[Callable]] = {}
@@ -257,6 +267,15 @@ class CloudEngine:
             # Ładuj statystyki
             await self._load_stats()
             
+            # 🛡️ Start Security (Cerber v7)
+            if SECURITY_AVAILABLE and self.config.get("security", {}).get("enabled", True):
+                self.logger.info("🛡️ Uruchamiam Cerber v7 Security...")
+                self.security = SecurityManager(
+                    base_dir=self.base_path / ".cerber",
+                    auto_start=True,
+                )
+                self.logger.info("🛡️ Cerber v7 aktywny!")
+            
             # Uruchom background tasks
             self._running = True
             
@@ -286,6 +305,11 @@ class CloudEngine:
         if self._backup_task:
             self._backup_task.cancel()
         
+        # 🛡️ Stop Security
+        if self.security:
+            self.logger.info("🛡️ Zatrzymuję Cerber v7...")
+            self.security.stop()
+        
         # Zamknij bazę danych
         if self.db:
             self.db.close()
@@ -296,7 +320,7 @@ class CloudEngine:
     
     def status(self) -> Dict[str, Any]:
         """Zwraca status chmury"""
-        return {
+        result = {
             "state": self.state.name,
             "storage_path": str(self.storage_path),
             "stats": {
@@ -311,6 +335,12 @@ class CloudEngine:
                 "ai_enabled": self.config.get("ai_local", {}).get("enabled")
             }
         }
+        
+        # Add security status
+        if self.security:
+            result["security"] = self.security.get_status()
+        
+        return result
     
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     # FILE OPERATIONS

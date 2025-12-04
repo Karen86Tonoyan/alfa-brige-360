@@ -48,6 +48,27 @@
         "timeout": 30,
         "user_agent": "ALFA_CORE/2.0"
       }
+    },
+    "photos": {
+      "enabled": true,
+      "name": "ALFA Photos Vault",
+      "priority": 5,
+      "description": "Military-grade encrypted photo gallery with self-healing AI",
+      "config": {
+        "vault_path": "~/.alfa/photos_vault",
+        "auto_rotation_days": 90,
+        "ai_enabled": true,
+        "thumb_size": 256,
+        "encryption": "AES-256-GCM"
+      },
+      "capabilities": [
+        "photo_encryption",
+        "key_rotation",
+        "thumbnail_generation",
+        "duplicate_detection",
+        "self_healing",
+        "android_integration"
+      ]
     }
   },
   

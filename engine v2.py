@@ -12,7 +12,7 @@ def read_version_safe() -> str:
         vf = Path("VERSION")
         if vf.exists():
             return vf.read_text(encoding="utf-8").strip()
-    except Exception:
+    except (OSError, UnicodeDecodeError):
         pass
     return "unknown"
 
@@ -26,10 +26,10 @@ def health():
 
 @app.get("/status")
 def status():
-    uptime = time.time() - START_TIME
+    uptime_seconds = time.time() - START_TIME
     return {
         "service": "ALFA_CORE",
-        "uptime_seconds": int(uptime),
+        "uptime_seconds": int(uptime_seconds),
         "host": socket.gethostname(),
         "version": read_version_safe(),
     }

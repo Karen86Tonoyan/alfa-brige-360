@@ -1,0 +1,92 @@
+[package]
+name = "alfa-keyvault"
+version = "4.0.0"
+edition = "2021"
+description = "ALFA_KEYVAULT 4.0 - Autonomiczny sejf z żywym AI, PQXHybrid i auto-polityką"
+license = "MIT OR Apache-2.0"
+authors = ["ALFA SYSTEM"]
+repository = "https://github.com/Karen86Tonoyan/alfa-keyvault"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.37", features = ["full", "sync", "time", "fs", "io-util", "signal"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Cryptography - core
+zeroize = { version = "1.8", features = ["zeroize_derive"] }
+secrecy = { version = "0.10", features = ["serde"] }
+argon2 = "0.5"
+aes-gcm = "0.10"
+chacha20poly1305 = "0.10"
+hkdf = "0.12"
+sha2 = "0.10"
+hmac = "0.12"
+
+# Random
+rand = "0.8"
+rand_core = "0.6"
+getrandom = "0.2"
+
+# Encoding
+base64 = "0.22"
+hex = "0.4"
+
+# Concurrency
+parking_lot = "0.12"
+crossbeam-channel = "0.5"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Filesystem
+dirs = "5.0"
+notify = "6.1"
+
+# CLI
+clap = { version = "4.5", features = ["derive"] }
+rpassword = "7.3"
+indicatif = "0.17"
+console = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# System info (dla auto-tuning)
+sysinfo = "0.32"
+
+# Optional: Ed25519/X25519
+ed25519-dalek = { version = "2.1", features = ["serde"] }
+x25519-dalek = { version = "2.0", features = ["serde"] }
+
+[dev-dependencies]
+tempfile = "3.14"
+tokio-test = "0.4"
+criterion = "0.5"
+
+[features]
+default = ["daemon", "auto-policy"]
+daemon = []
+auto-policy = []
+pqxhybrid = []  # Future: Kyber1024 + Dilithium3
+
+[[bin]]
+name = "alfa-keyvault"
+path = "src/main.rs"
+
+[[bin]]
+name = "alfa-vaultd"
+path = "src/daemon/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
