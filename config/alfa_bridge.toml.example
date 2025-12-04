@@ -1,0 +1,332 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# ALFA BRIDGE 360° — Multi-Agent Configuration
+# ═══════════════════════════════════════════════════════════════════════════
+# Copy to config.toml and customize with your API keys
+# Author: ALFA System / Karen86Tonoyan
+# Version: 2.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# AI AGENTS — Available LLM Providers
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GEMINI (Google) — Primary Agent
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "gemini"
+provider = "google"
+enabled = true
+default = true
+description = "Google Gemini 2.5 Flash — fast, multimodal"
+model = "gemini-2.5-flash"
+base_url = "https://generativelanguage.googleapis.com/v1beta/openai/"
+# env = { GEMINI_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "gemini-pro"
+provider = "google"
+enabled = true
+default = false
+description = "Google Gemini 2.5 Pro — strongest reasoning"
+model = "gemini-2.5-pro"
+base_url = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CLAUDE (Anthropic)
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "claude"
+provider = "anthropic"
+enabled = true
+default = false
+description = "Claude 3.5 Sonnet — excellent for code"
+model = "claude-3-5-sonnet-20241022"
+base_url = "https://api.anthropic.com/v1"
+# env = { ANTHROPIC_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "claude-opus"
+provider = "anthropic"
+enabled = false
+default = false
+description = "Claude Opus 4 — most capable"
+model = "claude-opus-4-20250514"
+base_url = "https://api.anthropic.com/v1"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DEEPSEEK — Cost-effective coding
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "deepseek"
+provider = "deepseek"
+enabled = true
+default = false
+description = "DeepSeek V3 — excellent for code, very cheap"
+model = "deepseek-chat"
+base_url = "https://api.deepseek.com/v1"
+# env = { DEEPSEEK_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "deepseek-reasoner"
+provider = "deepseek"
+enabled = true
+default = false
+description = "DeepSeek R1 — reasoning model"
+model = "deepseek-reasoner"
+base_url = "https://api.deepseek.com/v1"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# OPENROUTER — Multi-model gateway (one key, all models)
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "openrouter"
+provider = "openrouter"
+enabled = true
+default = false
+description = "OpenRouter gateway — access to 100+ models"
+model = "anthropic/claude-3.5-sonnet"
+base_url = "https://openrouter.ai/api/v1"
+# env = { OPENROUTER_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "openrouter-llama"
+provider = "openrouter"
+enabled = true
+default = false
+description = "Llama 3.3 70B via OpenRouter"
+model = "meta-llama/llama-3.3-70b-instruct"
+base_url = "https://openrouter.ai/api/v1"
+
+[[agents]]
+name = "openrouter-qwen"
+provider = "openrouter"
+enabled = true
+default = false
+description = "Qwen 2.5 Coder via OpenRouter"
+model = "qwen/qwen-2.5-coder-32b-instruct"
+base_url = "https://openrouter.ai/api/v1"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GROQ — Ultra-fast inference
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "groq"
+provider = "groq"
+enabled = true
+default = false
+description = "Groq — fastest inference (Llama 3)"
+model = "llama-3.3-70b-versatile"
+base_url = "https://api.groq.com/openai/v1"
+# env = { GROQ_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "groq-mixtral"
+provider = "groq"
+enabled = true
+default = false
+description = "Mixtral 8x7B on Groq"
+model = "mixtral-8x7b-32768"
+base_url = "https://api.groq.com/openai/v1"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# OLLAMA — Local models (privacy-first)
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "ollama"
+provider = "ollama"
+enabled = true
+default = false
+description = "Ollama local — privacy, no API cost"
+model = "llama3.2"
+base_url = "http://localhost:11434/v1"
+local = true
+
+[[agents]]
+name = "ollama-codellama"
+provider = "ollama"
+enabled = true
+default = false
+description = "CodeLlama local — coding tasks"
+model = "codellama:13b"
+base_url = "http://localhost:11434/v1"
+local = true
+
+[[agents]]
+name = "ollama-deepseek"
+provider = "ollama"
+enabled = true
+default = false
+description = "DeepSeek Coder local"
+model = "deepseek-coder-v2:16b"
+base_url = "http://localhost:11434/v1"
+local = true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# OPENAI (optional)
+# ─────────────────────────────────────────────────────────────────────────────
+[[agents]]
+name = "gpt-4o"
+provider = "openai"
+enabled = false
+default = false
+description = "GPT-4o — OpenAI flagship"
+model = "gpt-4o"
+base_url = "https://api.openai.com/v1"
+# env = { OPENAI_API_KEY = "your-key-here" }
+
+[[agents]]
+name = "gpt-4o-mini"
+provider = "openai"
+enabled = false
+default = false
+description = "GPT-4o Mini — fast & cheap"
+model = "gpt-4o-mini"
+base_url = "https://api.openai.com/v1"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ROUTING — Automatic agent selection
+# ═══════════════════════════════════════════════════════════════════════════
+
+[routing]
+# Default agent when no specific match
+default = "gemini"
+
+# Fallback chain if primary fails
+fallback_chain = ["deepseek", "groq", "ollama"]
+
+# Auto-select based on task type
+[routing.auto]
+enabled = true
+
+# Task-specific routing
+[routing.tasks]
+coding = ["deepseek", "claude", "gemini"]
+reasoning = ["deepseek-reasoner", "claude-opus", "gemini-pro"]
+creative = ["claude", "gemini", "gpt-4o"]
+fast = ["groq", "gemini", "ollama"]
+private = ["ollama", "ollama-codellama"]
+multimodal = ["gemini", "gpt-4o", "claude"]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CERBER SECURITY — Request validation
+# ═══════════════════════════════════════════════════════════════════════════
+
+[security]
+enabled = true
+max_tokens_per_request = 100000
+max_requests_per_minute = 60
+block_sensitive_data = true
+
+[security.filters]
+# Block these patterns in prompts
+blocked_patterns = [
+    "(?i)password\\s*[:=]",
+    "(?i)api[_-]?key\\s*[:=]",
+    "(?i)secret\\s*[:=]",
+    "(?i)credit\\s*card",
+    "\\b\\d{16}\\b",  # Credit card numbers
+]
+
+# Redact these in logs
+redact_patterns = [
+    "(?i)bearer\\s+[a-zA-Z0-9_-]+",
+    "(?i)sk-[a-zA-Z0-9]+",
+    "(?i)api[_-]?key[\"']?\\s*[:=]\\s*[\"']?[a-zA-Z0-9_-]+",
+]
+
+# ═══════════════════════════════════════════════════════════════════════════
+# SANDBOX — Code execution settings
+# ═══════════════════════════════════════════════════════════════════════════
+
+[sandbox]
+enabled = true
+timeout = 30
+max_memory_mb = 512
+max_output_size = 100000
+
+[sandbox.allowed_modules]
+python = ["math", "json", "datetime", "re", "collections", "itertools"]
+system = []  # No system access by default
+
+# ═══════════════════════════════════════════════════════════════════════════
+# LOGGING & HISTORY
+# ═══════════════════════════════════════════════════════════════════════════
+
+[logging]
+level = "INFO"
+file = "logs/alfa_bridge.log"
+max_size_mb = 50
+backup_count = 5
+
+[history]
+enabled = true
+persistence = "save-all"
+max_conversations = 1000
+encrypt = true
+
+# ═══════════════════════════════════════════════════════════════════════════
+# API SERVER
+# ═══════════════════════════════════════════════════════════════════════════
+
+[server]
+host = "0.0.0.0"
+port = 8000
+workers = 4
+cors_origins = ["*"]
+api_prefix = "/api/v1"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# PLUGINS
+# ═══════════════════════════════════════════════════════════════════════════
+
+[plugins]
+enabled = true
+directory = "plugins"
+auto_reload = true
+
+[[plugins.active]]
+name = "web_search"
+enabled = true
+
+[[plugins.active]]
+name = "code_executor"
+enabled = true
+
+[[plugins.active]]
+name = "file_manager"
+enabled = true
+
+[[plugins.active]]
+name = "image_analyzer"
+enabled = true
+
+# ═══════════════════════════════════════════════════════════════════════════
+# MOBILE SYNC
+# ═══════════════════════════════════════════════════════════════════════════
+
+[mobile]
+enabled = true
+sync_interval = 300  # seconds
+encryption = "AES-256-GCM"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# ENVIRONMENT VARIABLES (loaded from .env or system)
+# ═══════════════════════════════════════════════════════════════════════════
+# 
+# Required:
+#   GEMINI_API_KEY      - Google AI Studio
+#   
+# Optional:
+#   ANTHROPIC_API_KEY   - Claude
+#   DEEPSEEK_API_KEY    - DeepSeek
+#   OPENROUTER_API_KEY  - OpenRouter (one key, all models)
+#   GROQ_API_KEY        - Groq
+#   OPENAI_API_KEY      - OpenAI
+#
+# Get keys at:
+#   - https://aistudio.google.com/apikey (Gemini - FREE)
+#   - https://console.anthropic.com/ (Claude)
+#   - https://platform.deepseek.com/ (DeepSeek - CHEAP)
+#   - https://openrouter.ai/keys (OpenRouter - MULTI)
+#   - https://console.groq.com/ (Groq - FAST)
+# ═══════════════════════════════════════════════════════════════════════════
