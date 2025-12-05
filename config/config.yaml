@@ -1,0 +1,23 @@
+# ALFA_CORE v2.0 Configuration
+
+version: "2.0"
+name: "ALFA_CORE"
+
+default_provider: "gemini"
+
+providers:
+  gemini:
+    enabled: true
+    config_file: "gemini.yaml"
+
+  deepseek:
+    enabled: false
+    config_file: "deepseek.yaml"
+
+security:
+  cerber_enabled: true
+  log_blocked: true
+
+logging:
+  level: "INFO"
+  file: "logs/app.log"

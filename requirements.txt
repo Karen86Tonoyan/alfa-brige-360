@@ -35,6 +35,7 @@ anthropic>=0.25.0
 # SECURITY & CRYPTO
 # ─────────────────────────────────────────────────────────────────────────────
 cryptography>=42.0.0
+pycryptodome>=3.20.0  # AES-256 for ALFA SecretStore
 pyjwt>=2.8.0
 bcrypt>=4.1.0
 python-dotenv>=1.0.0
@@ -116,6 +117,27 @@ tiktoken>=0.7.0  # Token counting
 pynacl>=1.5.0  # XChaCha20-Poly1305 binding
 keyring>=25.2.0  # System keychain access
 secretstorage>=3.3.3  # Linux keyring (auto on Linux)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MIRROR PRO — MEDIA PROCESSING
+# ─────────────────────────────────────────────────────────────────────────────
+opencv-python>=4.9.0  # Video thumbnails
+mutagen>=1.47.0  # Audio metadata extraction
+moviepy>=1.0.3  # Video processing fallback
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MIRROR PRO — EMBEDDINGS & SEARCH
+# ─────────────────────────────────────────────────────────────────────────────
+sentence-transformers>=2.6.0  # Text embeddings
+faiss-cpu>=1.8.0  # Vector similarity search
+numpy>=1.26.0  # Required for faiss
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MIRROR PRO — NLP & ANALYSIS
+# ─────────────────────────────────────────────────────────────────────────────
+spacy>=3.7.0  # NLP pipeline
+textblob>=0.18.0  # Sentiment analysis (Cerber)
+langdetect>=1.0.9  # Language detection
 
 # ─────────────────────────────────────────────────────────────────────────────
 # DEVELOPMENT (install with: pip install -r requirements-dev.txt)

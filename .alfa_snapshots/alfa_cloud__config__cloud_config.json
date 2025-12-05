@@ -1,0 +1,83 @@
+{
+    "cloud_name": "ALFA_CLOUD_OFFLINE",
+    "version": "1.0.0",
+    "mode": "offline",
+
+    "server": {
+        "host": "127.0.0.1",
+        "port": 8765,
+        "lan_broadcast": true,
+        "lan_port": 8766,
+        "lan_multicast_group": "239.255.0.1"
+    },
+
+    "storage": {
+        "root_path": "./storage",
+        "max_size_gb": 100,
+        "chunk_size_mb": 10,
+        "compression": "zstd",
+        "deduplication": true
+    },
+
+    "encryption": {
+        "enabled": true,
+        "algorithm": "AES-256-GCM",
+        "key_derivation": "argon2id",
+        "hash_algorithm": "blake2b",
+        "auto_lock_minutes": 10
+    },
+
+    "sync": {
+        "enabled": true,
+        "mode": "lan_only",
+        "auto_sync": true,
+        "sync_interval_seconds": 300,
+        "conflict_resolution": "newest_wins",
+        "hash_compare": true
+    },
+
+    "ai_local": {
+        "enabled": true,
+        "provider": "ollama",
+        "endpoint": "http://127.0.0.1:11434",
+        "default_model": "llama3",
+        "models": {
+            "analysis": "llama3",
+            "embedding": "nomic-embed-text",
+            "vision": "llava"
+        }
+    },
+
+    "backup": {
+        "enabled": true,
+        "auto_backup": true,
+        "backup_interval_hours": 24,
+        "backup_path": "./backups",
+        "versions_to_keep": 7
+    },
+
+    "cache": {
+        "enabled": true,
+        "max_size_mb": 1024,
+        "ttl_hours": 168
+    },
+
+    "security": {
+        "require_auth": true,
+        "session_timeout_minutes": 60,
+        "max_login_attempts": 5,
+        "lockout_minutes": 15
+    },
+
+    "auth": {
+        "master_password_hash": null,
+        "token_lifetime_minutes": 120
+    },
+
+    "logging": {
+        "level": "INFO",
+        "file": "./logs/cloud.log",
+        "max_size_mb": 50,
+        "backup_count": 5
+    }
+}

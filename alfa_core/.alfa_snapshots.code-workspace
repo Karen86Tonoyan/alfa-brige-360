@@ -1,0 +1,52 @@
+{
+	"folders": [
+		{
+			"path": "../.alfa_snapshots"
+		},
+		{
+			"path": "../.git"
+		},
+		{
+			"path": "../.github"
+		},
+		{
+			"path": "../.vscode"
+		},
+		{
+			"path": "../alfa_brain"
+		},
+		{
+			"path": "../alfa_cloud"
+		},
+		{
+			"path": "../alfa_keyvault"
+		},
+		{
+			"path": "../ALFA_Mail"
+		},
+		{
+			"path": "../ALFA_Mail_Project"
+		},
+		{
+			"path": "../alfa_photos_vault"
+		},
+		{
+			"path": "../config"
+		},
+		{
+			"path": "../core"
+		},
+		{
+			"path": "../extensions"
+		},
+		{
+			"path": "../extra"
+		},
+		{
+			"path": "../modules"
+		},
+		{
+			"path": "../plugins"
+		}
+	]
+}

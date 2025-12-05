@@ -1,0 +1,60 @@
+{
+    "name": "bridge",
+    "version": "2.0.0",
+    "description": "AI Router Bridge - routes requests to appropriate AI backends",
+    "author": "ALFA System",
+    "license": "MIT",
+    
+    "main": "__init__",
+    
+    "dependencies": [],
+    "python_requires": ">=3.10",
+    
+    "commands": [
+        "route",
+        "ask",
+        "stream"
+    ],
+    
+    "hooks": [
+        "on_message",
+        "on_command"
+    ],
+    
+    "provides": [
+        "ai_router",
+        "model_selection"
+    ],
+    
+    "config_schema": {
+        "default_provider": {
+            "type": "string",
+            "enum": ["local", "openrouter", "deepseek"],
+            "default": "local"
+        },
+        "local_url": {
+            "type": "string",
+            "default": "http://127.0.0.1:11434"
+        },
+        "default_model": {
+            "type": "string",
+            "default": "llama3"
+        }
+    },
+    
+    "default_config": {
+        "default_provider": "local",
+        "local_url": "http://127.0.0.1:11434",
+        "default_model": "llama3"
+    },
+    
+    "permissions": [
+        "network.http"
+    ],
+    
+    "sandbox_level": "extended",
+    
+    "homepage": "https://github.com/Karen86Tonoyan/alfa-core",
+    "repository": "https://github.com/Karen86Tonoyan/alfa-core",
+    "tags": ["ai", "router", "ollama", "openrouter"]
+}

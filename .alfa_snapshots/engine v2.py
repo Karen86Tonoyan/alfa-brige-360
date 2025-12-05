@@ -1,29 +1,35 @@
 from fastapi import FastAPI
-import sqlite3
 import time
+import socket
+from pathlib import Path
 
 app = FastAPI()
 
+START_TIME = time.time()
+
+def read_version_safe() -> str:
+    try:
+        vf = Path("VERSION")
+        if vf.exists():
+            return vf.read_text(encoding="utf-8").strip()
+    except (OSError, UnicodeDecodeError):
+        pass
+    return "unknown"
+
 @app.get("/")
 def root():
-    return {
-        "status": "OK",
-        "message": "ALFA backend działa poprawnie.",
-        "timestamp": time.time()
-    }
+    return {"status": "ALFA_CORE_OK"}
 
 @app.get("/health")
 def health():
-    return {"alive": True}
+    return {"status": "ok", "service": "ALFA_CORE"}
 
-@app.get("/guard/status")
-def guard_status():
-    try:
-        conn = sqlite3.connect("alfa_guard.db")
-        cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM guard_events")
-        count = cursor.fetchone()[0]
-        conn.close()
-        return {"db_status": "OK", "events_logged": count}
-    except:
-        return {"db_status": "NOT_READY"}
+@app.get("/status")
+def status():
+    uptime_seconds = time.time() - START_TIME
+    return {
+        "service": "ALFA_CORE",
+        "uptime_seconds": int(uptime_seconds),
+        "host": socket.gethostname(),
+        "version": read_version_safe(),
+    }

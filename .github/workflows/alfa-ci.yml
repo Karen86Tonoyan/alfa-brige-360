@@ -1,0 +1,137 @@
+# ALFA CI Pipeline
+# Triggers: push to main/develop, PRs
+
+name: ALFA CI
+
+on:
+  push:
+    branches: [main, develop, KAREN1986BOT]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  # === LINT & TYPE CHECK ===
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+          pip install -e ".[dev]"
+          
+      - name: Ruff lint
+        run: ruff check . --output-format=github
+        
+      - name: Ruff format check
+        run: ruff format --check .
+        
+      - name: MyPy type check
+        run: mypy alfa_core --ignore-missing-imports
+        continue-on-error: true
+
+  # === TESTS ===
+  test:
+    name: Tests
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+        
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,compression]"
+          
+      - name: Run tests
+        run: pytest tests/ -v --tb=short
+        
+      - name: Run tests with coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        run: |
+          pytest tests/ --cov=alfa_core --cov-report=xml
+          
+      - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        uses: codecov/codecov-action@v4
+        with:
+          file: coverage.xml
+          fail_ci_if_error: false
+
+  # === SECURITY ===
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Install Bandit
+        run: pip install bandit[toml]
+        
+      - name: Run Bandit
+        run: bandit -c pyproject.toml -r alfa_core modules plugins -f json -o bandit-report.json
+        continue-on-error: true
+        
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+
+  # === BUILD ===
+  build:
+    name: Build Package
+    runs-on: ubuntu-latest
+    needs: [quality, test]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Install build tools
+        run: pip install build twine
+        
+      - name: Build package
+        run: python -m build
+        
+      - name: Check package
+        run: twine check dist/*
+        
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

@@ -1,0 +1,134 @@
+{
+  "_comment": "MAGESTIK MAIL / ALFA Mail - Configuration v1.0",
+  "_author": "ALFA System / Karen86Tonoyan",
+  
+  "app": {
+    "name": "Magestik Mail",
+    "version": "1.0.0",
+    "mode": "local",
+    "debug": false,
+    "log_level": "INFO"
+  },
+
+  "database": {
+    "path": "data/magestik_mail.db",
+    "encrypted": true,
+    "passphrase_env": "MAGESTIK_DB_KEY",
+    "default_passphrase": "ALFA_KING_2025_SECURE",
+    "vacuum_on_startup": false
+  },
+
+  "imap": {
+    "default_account": "primary",
+    "sync_interval_minutes": 15,
+    "sync_on_startup": true,
+    "max_mails_per_sync": 100,
+    "sync_days_back": 30,
+    "timeout_seconds": 30,
+    "max_retries": 3,
+    "retry_delay_seconds": 2.0
+  },
+
+  "smtp": {
+    "timeout_seconds": 30,
+    "use_tls": true,
+    "default_signature": "\n\n---\nSent via Magestik Mail / ALFA System"
+  },
+
+  "accounts": [
+    {
+      "id": "primary",
+      "name": "Primary Account",
+      "email": "your-email@gmail.com",
+      "imap_host": "imap.gmail.com",
+      "imap_port": 993,
+      "smtp_host": "smtp.gmail.com",
+      "smtp_port": 587,
+      "username": "your-email@gmail.com",
+      "password_env": "MAGESTIK_EMAIL_PASSWORD",
+      "password_encrypted": "",
+      "use_ssl": true,
+      "is_active": true,
+      "folders_to_sync": ["INBOX", "Sent", "Important"]
+    }
+  ],
+
+  "cerber": {
+    "enabled": true,
+    "threat_threshold": 50,
+    "fingerprint_enabled": true,
+    "ai_detection_enabled": true,
+    "phishing_keywords": [
+      "urgent action required",
+      "verify your account",
+      "suspended",
+      "click here immediately",
+      "lottery winner",
+      "nigerian prince",
+      "wire transfer",
+      "bitcoin payment"
+    ],
+    "trusted_senders": [],
+    "blocked_senders": [],
+    "auto_quarantine_high_threat": true
+  },
+
+  "krol_mode": {
+    "enabled": true,
+    "priority_threshold": 7,
+    "show_threat_badge": true,
+    "sort_by_priority": true,
+    "notification_sound": "royal_alert.wav"
+  },
+
+  "ai_classifier": {
+    "enabled": false,
+    "provider": "ollama",
+    "model": "phi3:mini",
+    "endpoint": "http://localhost:11434/api/chat",
+    "timeout_seconds": 30,
+    "classify_on_fetch": false,
+    "batch_classify_limit": 20
+  },
+
+  "ui": {
+    "theme": "dark",
+    "language": "pl",
+    "font_size": 14,
+    "show_preview_pane": true,
+    "preview_lines": 3,
+    "date_format": "%Y-%m-%d %H:%M",
+    "confirm_delete": true,
+    "mark_read_on_open": true
+  },
+
+  "security": {
+    "master_key_env": "MAGESTIK_MASTER_KEY",
+    "encrypt_attachments": true,
+    "wipe_on_failed_auth": false,
+    "max_auth_attempts": 5,
+    "session_timeout_minutes": 30,
+    "pqxhybrid_enabled": false
+  },
+
+  "storage": {
+    "data_dir": "data",
+    "attachments_dir": "data/attachments",
+    "logs_dir": "logs",
+    "cache_dir": "cache",
+    "max_attachment_size_mb": 25,
+    "cache_ttl_hours": 24
+  },
+
+  "notifications": {
+    "enabled": true,
+    "sound_enabled": true,
+    "desktop_enabled": true,
+    "high_priority_only": false,
+    "quiet_hours": {
+      "enabled": false,
+      "start": "22:00",
+      "end": "07:00"
+    }
+  }
+}

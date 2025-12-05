@@ -58,3 +58,28 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 }
+
+# Import
+from modules.automation_hub import AutomationHub
+from modules.integrations import IntegrationManager
+
+# Inicjalizacja
+hub = AutomationHub()
+
+# CRM - dodaj lead
+hub.business.add_lead(Lead(name="Jan", email="jan@firma.pl"))
+
+# Content - generuj treść
+await hub.content.generate(ContentRequest(type="blog", prompt="AI w biznesie"))
+
+# Chatbot
+response = hub.communication.chatbot_respond("Cześć!")
+
+# Analytics
+hub.analytics.track_metric("users", 150)
+hub.analytics.generate_report("daily", ["users", "revenue"])
+
+# Integracje
+manager = IntegrationManager()
+manager.register("my_slack", "slack", IntegrationConfig(token="xoxb-..."))
+await manager.send("my_slack", {"channel": "#general", "text": "Hello!"})

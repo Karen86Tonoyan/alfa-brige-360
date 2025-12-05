@@ -1,0 +1,36 @@
+# ALFA Delta Bridge Configuration
+# Ustaw swoje dane IMAP/SMTP
+
+delta:
+  enabled: true
+  
+  imap:
+    host: "imap.example.com"
+    port: 993
+    username: "${DELTA_IMAP_USER}"
+    password: "${DELTA_IMAP_PASS}"
+    ssl: true
+    folder: "INBOX"
+    poll_interval: 5  # sekundy
+    
+  smtp:
+    host: "smtp.example.com"
+    port: 587
+    username: "${DELTA_SMTP_USER}"
+    password: "${DELTA_SMTP_PASS}"
+    starttls: true
+    
+  voice:
+    enabled: true
+    format: "ogg"  # ogg/mp3/wav
+    tts_engine: "piper"  # piper/edge/deepseek
+    
+  security:
+    allowed_senders: []  # puste = wszyscy, lub lista adresów
+    cerber_filter: true
+    max_message_size: 10485760  # 10MB
+    
+  processing:
+    timeout: 30  # sekundy na przetworzenie
+    retry_count: 3
+    queue_size: 100

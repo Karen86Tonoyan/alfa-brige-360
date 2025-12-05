@@ -1,0 +1,15 @@
+# ============================================
+# ALFA / DEEPSEEK CONFIG v1.0
+# Zero chmury poza API. Zero dekoracji.
+# ============================================
+
+engine: deepseek-chat
+api_key: "sk-WKLEJ_SWOJ_KLUCZ"
+temperature: 0.6
+max_tokens: 4096
+timeout: 60
+voice_mode: true
+
+# Opcjonalne: integracja z ALFA_GUARD
+guard_enabled: false
+guard_log_path: "logs/deepseek_guard.log"

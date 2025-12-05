@@ -1,0 +1,101 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# ALFA_SEAT Configuration v1.0
+# ═══════════════════════════════════════════════════════════════════════════
+# Command Center configuration file
+# ═══════════════════════════════════════════════════════════════════════════
+
+seat:
+  enabled: true
+  version: "1.0.0"
+  name: "ALFA_SEAT Command Center"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Security (Cerber)
+# ─────────────────────────────────────────────────────────────────────────────
+security:
+  cerber_enabled: true
+  max_task_length: 8000
+  
+  # Forbidden patterns in instructions
+  forbidden_patterns:
+    - "delete system"
+    - "rm -rf /"
+    - "format c:"
+    - "drop database"
+    - "shutdown"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Role Assignments
+# ─────────────────────────────────────────────────────────────────────────────
+roles:
+  default:
+    architect: "claude"
+    integrator: "gpt"
+    coder: "gpt"
+    tester: "gemini"
+    analyst: "deepseek"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Model Permissions
+# ─────────────────────────────────────────────────────────────────────────────
+models:
+  allowed_roles:
+    architect:
+      - claude
+      - gpt
+      - gemini
+    integrator:
+      - gpt
+      - gemini
+      - deepseek
+    coder:
+      - gpt
+      - claude
+      - deepseek
+      - ollama_mistral
+      - ollama_codellama
+    tester:
+      - gemini
+      - deepseek
+      - gpt
+    analyst:
+      - deepseek
+      - gemini
+      - gpt
+      - claude
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Pipeline Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+pipeline:
+  # Timeouts per stage (seconds)
+  timeouts:
+    architect: 60
+    integrator: 90
+    coder: 90
+    tester: 60
+    analyst: 60
+  
+  # Retry on failure
+  retry:
+    enabled: true
+    max_attempts: 2
+    delay_seconds: 5
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Logging
+# ─────────────────────────────────────────────────────────────────────────────
+logging:
+  level: INFO
+  buffer_size: 100
+  persist_logs: false
+  log_file: "logs/alfa_seat.log"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# UI Settings (for future frontend)
+# ─────────────────────────────────────────────────────────────────────────────
+ui:
+  theme: "wolf-king"  # black-gold
+  animations: true
+  show_stage_details: true
+  websocket_reconnect: true

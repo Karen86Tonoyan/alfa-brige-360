@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "plugins": [
+    {
+      "name": "mail",
+      "enabled": true,
+      "auto_start": true,
+      "priority": 10,
+      "config": {
+        "imap_host": "",
+        "imap_port": 993,
+        "check_interval": 300
+      }
+    },
+    {
+      "name": "voice",
+      "enabled": true,
+      "auto_start": false,
+      "priority": 20,
+      "config": {
+        "stt_engine": "whisper",
+        "tts_engine": "edge",
+        "wakeword": "alfa"
+      }
+    },
+    {
+      "name": "bridge",
+      "enabled": true,
+      "auto_start": true,
+      "priority": 5,
+      "config": {
+        "default_provider": "ollama",
+        "fallback_chain": ["ollama", "deepseek"]
+      }
+    }
+  ]
+}

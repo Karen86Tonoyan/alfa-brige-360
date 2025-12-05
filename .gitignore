@@ -8,6 +8,19 @@ blobs/
 *.gguf
 *.safetensors
 
+# === ALFA SECURITY - CRITICAL ===
+# NEVER commit these files!
+.env
+.env.*
+*.key
+*.pem
+master.key
+secrets.enc
+alfa_core/security/master.key
+alfa_core/security/secrets.enc
+**/master.key
+**/secrets.enc
+
 # Python junk
 __pycache__/
 *.pyc
